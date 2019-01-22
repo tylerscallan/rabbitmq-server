@@ -199,6 +199,7 @@ upgrade_mode(AllNodes) ->
             end
     end.
 
+-spec die(string(), list()) -> no_return().
 die(Msg, Args) ->
     %% We don't throw or exit here since that gets thrown
     %% straight out into do_boot, generating an erl_crash.dump

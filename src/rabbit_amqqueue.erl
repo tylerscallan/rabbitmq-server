@@ -592,9 +592,13 @@ retry_wait(Q = #amqqueue{pid = QPid, name = Name, state = QState}, F, E, Retries
 with(Name, F) -> with(Name, F, fun (E) -> {error, E} end).
 
 with_or_die(Name, F) ->
-    with(Name, F, fun (not_found)           -> rabbit_misc:not_found(Name);
-                      ({absent, Q, Reason}) -> rabbit_misc:absent(Q, Reason)
-                  end).
+    with(Name, F, with_or_die_fun(Name)).
+
+-spec with_or_die_fun(_) -> fun((_) -> no_return()).
+with_or_die_fun(Name) ->
+    fun (not_found)           -> rabbit_misc:not_found(Name);
+        ({absent, Q, Reason}) -> rabbit_misc:absent(Q, Reason)
+    end.
 
 assert_equivalence(#amqqueue{name        = QName,
                              durable     = Durable,
