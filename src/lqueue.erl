@@ -30,9 +30,8 @@
               ?MODULE/1
              ]).
 
--opaque ?MODULE() :: {non_neg_integer(), queue:queue(term())}.
+-opaque ?MODULE() :: ?MODULE(_).
 -opaque ?MODULE(T) :: {non_neg_integer(), queue:queue(T)}.
--type value()     :: any().
 -type result(T)    :: 'empty' | {'value', T}.
 
 -spec new() -> ?MODULE(_).
@@ -40,9 +39,9 @@
 -spec is_empty(?MODULE(_)) -> boolean().
 -spec len(?MODULE(_)) -> non_neg_integer().
 -spec in(T, ?MODULE(T)) -> ?MODULE(T).
--spec in_r(value(), ?MODULE()) -> ?MODULE().
--spec out(?MODULE(T)) -> {result(T), ?MODULE()}.
--spec out_r(?MODULE(T)) -> {result(T), ?MODULE()}.
+-spec in_r(T, ?MODULE(T)) -> ?MODULE(T).
+-spec out(?MODULE(T)) -> {result(T), ?MODULE(T)}.
+-spec out_r(?MODULE(T)) -> {result(T), ?MODULE(T)}.
 -spec join(?MODULE(A), ?MODULE(B)) -> ?MODULE(A | B).
 -spec foldl(fun ((T, B) -> B), B, ?MODULE(T)) -> B.
 -spec foldr(fun ((T, B) -> B), B, ?MODULE(T)) -> B.
